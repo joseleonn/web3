@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logo, sun } from "../assets";
 import { navlinks } from "../constants";
-
+import { useStateContext } from "../context";
 const Icon = ({ styles, name, imgUrl, isActive, disable, handleClick }) => (
   <div
     className={`w-[48px] h-[48px] rounded-[10px] ${
@@ -26,6 +26,12 @@ const Icon = ({ styles, name, imgUrl, isActive, disable, handleClick }) => (
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState("dashboard");
+  const { address } = useStateContext();
+  if (address) {
+    navlinks[5].disabled = false;
+  } else {
+    navlinks[5].disabled = true;
+  }
   return (
     <div className="flex justify-between items-center flex-col sticky top-5 h-[93vh]">
       <Link to="/">
@@ -48,7 +54,6 @@ const Sidebar = () => {
             />
           ))}
         </div>
-
         <Icon styles="bg-[1c1c24] shadow-secondary" imgUrl={sun} />
       </div>
     </div>
